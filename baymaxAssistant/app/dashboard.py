@@ -1,9 +1,10 @@
 import streamlit as st
 from threading import Thread
-from app.gemini_module import query_gemini
-from app.calendar_module import get_upcoming_events
-from app.heart_rate_module import get_bpm
-from app.baymax_voice_module import run_baymax_voice  # Your voice assistant
+from gemini_module import query_gemini
+from calendar_module import get_upcoming_events
+from heart_rate_module import get_bpm
+# from baymax_ai_face import run_baymax_voice  # Your voice assistant
+import baymax_ai_face
 
 # Streamlit page configuration
 st.set_page_config(
@@ -74,4 +75,4 @@ with tab4:
 
     if st.button("Start Voice Assistant"):
         st.warning("Voice assistant running in background. Close app to stop.")
-        Thread(target=run_baymax_voice, daemon=True).start()
+        Thread(target=baymax_ai_face, daemon=True).start()
