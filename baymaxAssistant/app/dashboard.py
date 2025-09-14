@@ -8,12 +8,12 @@ import baymax_ai_face
 
 # Streamlit page configuration
 st.set_page_config(
-    page_title="Baymax Assistant",
+    page_title="BAImax Assistant",
     layout="wide"
 )
 
 # Title
-st.title("🤖 Baymax - Your Personal Healthcare Assistant")
+st.title("🤖 BAImax - Your Personal Healthcare Assistant")
 
 # Create tabs
 tab1, tab2, tab3, tab4 = st.tabs([
@@ -83,4 +83,5 @@ with tab4:
     if st.session_state.show_voice_assistant:
         from bavoice3 import start_voice_interaction_ui
         start_voice_interaction_ui()
+
 
