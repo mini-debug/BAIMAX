@@ -13,7 +13,7 @@ from streamlit_webrtc import webrtc_streamer, AudioProcessorBase
 
 # **** SETTINGS OF THE API KEY ****
 WS_URL = "wss://api.openai.com/v1/realtime?model=gpt-4o-mini-realtime-preview-2024-12-17"
-API_KEY = st.secrets.get("OPENAI_KEY", "sk-YOURKEY")  # We have to put our key in .streamlit/secrets.toml       
+API_KEY = "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"
 
 # **** STATE **** 
 if "is_speaking" not in st.session_state:  # 
@@ -177,3 +177,35 @@ webrtc_streamer(key="mic", audio_processor_factory=AudioProcessor, media_stream_
 st.subheader("Live Transcript:")
 for m in st.session_state.messages[-15:]:
     st.write(m)
+
+# bavoice3.py
+
+def start_voice_interaction_ui():
+    # Setup UI
+    st.markdown(draw_baymax_face(st.session_state.is_speaking), unsafe_allow_html=True)
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("Connect to OpenAI", key="connect_openai"):
+            connect_to_openai()
+            threading.Thread(target=send_audio_to_openai, daemon=True).start()
+    with col2:
+        if st.button("Stop", key="stop_openai"):
+            st.session_state.stop_event.set()
+            if st.session_state.ws:
+                try:
+                    st.session_state.ws.close()
+                except:
+                    pass
+
+    # Mic
+    webrtc_streamer(
+        key="mic",
+        audio_processor_factory=AudioProcessor,
+        media_stream_constraints={"audio": True, "video": False}
+    )
+
+    # Live transcript
+    st.subheader("Live Transcript:")
+    for m in st.session_state.messages[-15:]:
+        st.write(m)
