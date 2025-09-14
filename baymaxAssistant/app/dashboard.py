@@ -71,7 +71,7 @@ with tab3:
 
 # === TAB 4: Voice Assistant ===
 with tab4:
-    st.header("🎙️ Baymax Voice Assistant")
+    st.header("🎙️ BAImax Voice Assistant")
 
     # Session flag to control assistant visibility
     if "show_voice_assistant" not in st.session_state:
@@ -83,5 +83,6 @@ with tab4:
     if st.session_state.show_voice_assistant:
         from bavoice3 import start_voice_interaction_ui
         start_voice_interaction_ui()
+
 
 
