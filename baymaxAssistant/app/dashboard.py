@@ -3,7 +3,7 @@ from threading import Thread
 from gemini_module import query_gemini
 from calendar_module import get_upcoming_events
 from heart_rate_module import get_bpm
-# from baymax_ai_face import run_baymax_voice  # Your voice assistant
+from bavoice3 import start_voice_interaction_ui
 import baymax_ai_face
 
 # Streamlit page configuration
@@ -73,6 +73,14 @@ with tab3:
 with tab4:
     st.header("🎙️ Baymax Voice Assistant")
 
+    # Session flag to control assistant visibility
+    if "show_voice_assistant" not in st.session_state:
+        st.session_state.show_voice_assistant = False
+
     if st.button("Start Voice Assistant"):
-        st.warning("Voice assistant running in background. Close app to stop.")
-        Thread(target=baymax_ai_face, daemon=True).start()
+        st.session_state.show_voice_assistant = True
+
+    if st.session_state.show_voice_assistant:
+        from bavoice3 import start_voice_interaction_ui
+        start_voice_interaction_ui()
+
